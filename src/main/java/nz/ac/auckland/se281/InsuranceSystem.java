@@ -19,32 +19,64 @@ public class InsuranceSystem {
   public void printDatabase() {
     int numberOfProfiles = peopleList.size();
 
-    if (numberOfProfiles == 0) {
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage("0", "s", ".");
+    switch (numberOfProfiles) {
+      case 0:
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage("0", "s", ".");
 
-    } else if (numberOfProfiles == 1) {
+        break;
 
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", ":", "");
-      String userName = peopleList.get(0).getUserName();
-      String age = peopleList.get(0).getAge();
-      // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-      System.out.println("" + "1:" + " " + userName + "," + " " + age);
-
-    } else {
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage((Integer.toString(numberOfProfiles)), "s", ":");
-      for (int i = 0; i < numberOfProfiles; i++) {
-        String userName = peopleList.get(i).getUserName();
-        String age = peopleList.get(i).getAge();
-        String rank = Integer.toString(peopleList.get(i).getRank() + 1);
+      case 1:
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", ":", "");
+        String userName = peopleList.get(0).getUserName();
+        String age = peopleList.get(0).getAge();
         // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-        System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
+        System.out.println("" + "1:" + " " + userName + "," + " " + age);
+        break;
+      default:
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage((Integer.toString(numberOfProfiles)), "s", ":");
+        for (int i = 0; i < numberOfProfiles; i++) {
+          userName = peopleList.get(i).getUserName();
+          age = peopleList.get(i).getAge();
 
-      }
+          // rank is being declared for the first time here however userName and age were
+          // already declared before which is why this has String infront of it but they
+          // dont
+
+          String rank = Integer.toString(peopleList.get(i).getRank() + 1);
+          // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
+          System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
+        }
+        break;
     }
+
+    // if (numberOfProfiles == 0) {
+    // MessageCli.PRINT_DB_POLICY_COUNT.printMessage("0", "s", ".");
+
+    // } else if (numberOfProfiles == 1) {
+
+    // MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", ":", "");
+    // String userName = peopleList.get(0).getUserName();
+    // String age = peopleList.get(0).getAge();
+    // // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
+    // System.out.println("" + "1:" + " " + userName + "," + " " + age);
+
+    // } else {
+    // MessageCli.PRINT_DB_POLICY_COUNT.printMessage((Integer.toString(numberOfProfiles)),
+    // "s", ":");
+    // for (int i = 0; i < numberOfProfiles; i++) {
+    // String userName = peopleList.get(i).getUserName();
+    // String age = peopleList.get(i).getAge();
+    // String rank = Integer.toString(peopleList.get(i).getRank() + 1);
+    // // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
+    // System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
+
+    // }
+    // }
 
   }
 
   public boolean userNameUniqueCheck(String userNameString) {
+    //
     for (int i = 0; i < peopleList.size(); i++) {
       if (userNameString.compareTo(peopleList.get(i).getUserName()) == 0) {
         return false;
