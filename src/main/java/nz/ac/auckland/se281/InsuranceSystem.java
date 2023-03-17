@@ -6,10 +6,10 @@ import javax.lang.model.util.ElementScanner14;
 
 import nz.ac.auckland.se281.Main.PolicyType;
 
-//TODO: REFACTOR TO USE SWITCH CASE 
-
 public class InsuranceSystem {
-  private ArrayList<Person> peopleList = new ArrayList();
+  private ArrayList<Person> peopleList = new ArrayList<Person>();
+  // this counter will be incremented every time a new Person in instantiated and
+  // will be used as their rank attribute
   private int rankCounter = 0;
 
   public InsuranceSystem() {
@@ -20,9 +20,9 @@ public class InsuranceSystem {
     int numberOfProfiles = peopleList.size();
 
     switch (numberOfProfiles) {
+
       case 0:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage("0", "s", ".");
-
         break;
 
       case 1:
@@ -32,6 +32,7 @@ public class InsuranceSystem {
         // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
         System.out.println("" + "1:" + " " + userName + "," + " " + age);
         break;
+
       default:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage((Integer.toString(numberOfProfiles)), "s", ":");
         for (int i = 0; i < numberOfProfiles; i++) {
@@ -49,34 +50,10 @@ public class InsuranceSystem {
         break;
     }
 
-    // if (numberOfProfiles == 0) {
-    // MessageCli.PRINT_DB_POLICY_COUNT.printMessage("0", "s", ".");
-
-    // } else if (numberOfProfiles == 1) {
-
-    // MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", ":", "");
-    // String userName = peopleList.get(0).getUserName();
-    // String age = peopleList.get(0).getAge();
-    // // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-    // System.out.println("" + "1:" + " " + userName + "," + " " + age);
-
-    // } else {
-    // MessageCli.PRINT_DB_POLICY_COUNT.printMessage((Integer.toString(numberOfProfiles)),
-    // "s", ":");
-    // for (int i = 0; i < numberOfProfiles; i++) {
-    // String userName = peopleList.get(i).getUserName();
-    // String age = peopleList.get(i).getAge();
-    // String rank = Integer.toString(peopleList.get(i).getRank() + 1);
-    // // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-    // System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
-
-    // }
-    // }
-
   }
 
   public boolean userNameUniqueCheck(String userNameString) {
-    //
+    // makes sure that userNameString is not already being used to
     for (int i = 0; i < peopleList.size(); i++) {
       if (userNameString.compareTo(peopleList.get(i).getUserName()) == 0) {
         return false;
