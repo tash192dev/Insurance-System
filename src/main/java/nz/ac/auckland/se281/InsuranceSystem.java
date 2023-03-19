@@ -2,8 +2,6 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 
-import javax.lang.model.util.ElementScanner14;
-
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
