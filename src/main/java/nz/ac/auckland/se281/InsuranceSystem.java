@@ -75,14 +75,24 @@ public class InsuranceSystem {
   public void createNewProfile(String userName, String age) {
     // formatting username to Title case
     userName = userNameFormatter(userName);
+    boolean isDecimal = false;
+
+    try {
+      Integer.parseInt(age);
+    } catch (NumberFormatException e) {
+      // This catches any decimal numbers that may may be seen
+      MessageCli.INVALID_AGE.printMessage(age, userName);
+      return;
+    }
 
     if ((userName.length() < 3)) {
       MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
 
     } else if (userNameUniqueCheck(userName) != true) {
       MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
-    } else if (Integer.valueOf(age) < 1) {
+    } else if ((Integer.valueOf(age) < 1)) {
       MessageCli.INVALID_AGE.printMessage(age, userName);
+
     } else {
       Person newPerson = new Person(userName, age, rankCounter);
       peopleList.add(newPerson);
