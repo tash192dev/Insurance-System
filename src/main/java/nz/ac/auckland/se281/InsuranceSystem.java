@@ -13,6 +13,7 @@ public class InsuranceSystem {
   // will be used as their rank attribute
   private int rankCounter = 0;
   private Person personFound;
+  private int personPosition;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -31,9 +32,11 @@ public class InsuranceSystem {
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", ":", "");
         String userName = peopleList.get(0).getUserName();
         String age = peopleList.get(0).getAge();
-        // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
+        if (isLoaded) {
+          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ", "1", userName, age);
+          return;
+        }
         MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", userName, age);
-        // System.out.println("" + "1:" + " " + userName + "," + " " + age);
         break;
 
       default:
@@ -46,11 +49,13 @@ public class InsuranceSystem {
           // already declared before which is why this has String infront of it but they
           // dont
 
-          String rank = Integer.toString(peopleList.get(i).getRank() + 1);
-          // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(rank, userName, age);
+          String rank = Integer.toString(i + 1);
 
-          // System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
+          if (peopleList.get(i) == loadedPerson) {
+            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ", rank, userName, age);
+          } else {
+            MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(rank, userName, age);
+          }
         }
         break;
     }
@@ -62,6 +67,7 @@ public class InsuranceSystem {
     for (int i = 0; i < peopleList.size(); i++) {
       if (userNameString.compareTo(peopleList.get(i).getUserName()) == 0) {
         personFound = peopleList.get(i);
+        personPosition = i;
         return false;
       }
     }
@@ -83,7 +89,10 @@ public class InsuranceSystem {
   public void createNewProfile(String userName, String age) {
     // formatting username to Title case
     userName = userNameFormatter(userName);
-
+    if (isLoaded) {
+      MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(userName);
+      return;
+    }
     try {
       Integer.parseInt(age);
     } catch (NumberFormatException e) {
@@ -114,11 +123,6 @@ public class InsuranceSystem {
 
   public void loadProfile(String userName) {
 
-    if (isLoaded) {
-      MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(loadedPerson.getUserName());
-      return;
-    }
-
     userName = userNameFormatter(userName);
 
     boolean userNameFound = !userNameUniqueCheck(userName);
@@ -134,11 +138,35 @@ public class InsuranceSystem {
   }
 
   public void unloadProfile() {
-    // TODO: Complete this method.
+    if (isLoaded) {
+      MessageCli.PROFILE_UNLOADED.printMessage(loadedPerson.getUserName());
+      isLoaded = false;
+      loadedPerson = null;
+      return;
+    }
+    MessageCli.NO_PROFILE_LOADED.printMessage();
+    return;
   }
 
   public void deleteProfile(String userName) {
-    // TODO: Complete this method.
+
+    userName = userNameFormatter(userName);
+
+    boolean userNameFound = !userNameUniqueCheck(userName);
+    if (!userNameFound) {
+      MessageCli.NO_PROFILE_FOUND_TO_DELETE.printMessage(userName);
+      return;
+    } else if (isLoaded) {
+      if (loadedPerson.getUserName().compareTo(userName) == 0) {
+        MessageCli.CANNOT_DELETE_PROFILE_WHILE_LOADED.printMessage(userName);
+        return;
+      }
+    }
+
+    peopleList.remove(personPosition);
+    MessageCli.PROFILE_DELETED.printMessage(userName);
+    return;
+
   }
 
   public void createPolicy(PolicyType type, String[] options) {
