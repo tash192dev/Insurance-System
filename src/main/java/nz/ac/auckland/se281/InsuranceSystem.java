@@ -1,6 +1,9 @@
 package nz.ac.auckland.se281;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
+
+import org.eclipse.jgit.transport.CredentialItem.Username;
 
 import nz.ac.auckland.se281.Main.PolicyType;
 
@@ -9,6 +12,7 @@ public class InsuranceSystem {
   // this counter will be incremented every time a new Person in instantiated and
   // will be used as their rank attribute
   private int rankCounter = 0;
+  private Person personFound;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -28,7 +32,8 @@ public class InsuranceSystem {
         String userName = peopleList.get(0).getUserName();
         String age = peopleList.get(0).getAge();
         // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-        System.out.println("" + "1:" + " " + userName + "," + " " + age);
+        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", userName, age);
+        // System.out.println("" + "1:" + " " + userName + "," + " " + age);
         break;
 
       default:
@@ -43,7 +48,9 @@ public class InsuranceSystem {
 
           String rank = Integer.toString(peopleList.get(i).getRank() + 1);
           // <SPACE><RANK><COLON><SPACE><USERNAME><COMMA><SPACE><AGE>
-          System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
+          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(rank, userName, age);
+
+          // System.out.println("" + rank + ":" + " " + userName + "," + " " + age);
         }
         break;
     }
@@ -54,6 +61,7 @@ public class InsuranceSystem {
     // makes sure that userNameString is not already being used to
     for (int i = 0; i < peopleList.size(); i++) {
       if (userNameString.compareTo(peopleList.get(i).getUserName()) == 0) {
+        personFound = peopleList.get(i);
         return false;
       }
     }
@@ -62,20 +70,19 @@ public class InsuranceSystem {
 
   public String userNameFormatter(String userName) {
 
-    // This method formats the input string to title case
+    // This method will format the userName to Title case
+    // e.g.
+    // danK -> Dank
     // daNk -> Dank
     // dank -> Dank
-
+    // DaNK -> Dank
     String newUserName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
-    System.out.println();
-
     return newUserName;
   }
 
   public void createNewProfile(String userName, String age) {
     // formatting username to Title case
     userName = userNameFormatter(userName);
-    boolean isDecimal = false;
 
     try {
       Integer.parseInt(age);
@@ -102,8 +109,28 @@ public class InsuranceSystem {
     }
   }
 
+  boolean isLoaded = false;
+  Person loadedPerson;
+
   public void loadProfile(String userName) {
-    // TODO: Complete this method.
+
+    if (isLoaded) {
+      MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(loadedPerson.getUserName());
+      return;
+    }
+
+    userName = userNameFormatter(userName);
+
+    boolean userNameFound = !userNameUniqueCheck(userName);
+    if (userNameFound) {
+      loadedPerson = personFound;
+      isLoaded = true;
+      MessageCli.PROFILE_LOADED.printMessage(userName);
+      return;
+    }
+
+    MessageCli.NO_PROFILE_FOUND_TO_LOAD.printMessage(userName);
+
   }
 
   public void unloadProfile() {

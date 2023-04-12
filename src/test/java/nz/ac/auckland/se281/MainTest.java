@@ -11,10 +11,10 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-  MainTest.Task1.class,
-  // MainTest.Task2.class, // Uncomment this line when to start Task 2
-  // MainTest.Task3.class, // Uncomment this line when to start Task 3
-  // MainTest.YourTests.class, // Uncomment this line to run your own tests
+    MainTest.Task1.class,
+// MainTest.Task2.class, // Uncomment this line when to start Task 2
+// MainTest.Task3.class, // Uncomment this line when to start Task 3
+// MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
   public static class Task1 extends CliTest {
@@ -376,12 +376,11 @@ public class MainTest {
     }
   }
 
-  private static final Object[] CREATE_SOME_CLIENTS =
-      new Object[] {
-        CREATE_PROFILE, "Jordan", "21", //
-        CREATE_PROFILE, "Tom", "25", //
-        CREATE_PROFILE, "Jenny", "23",
-      };
+  private static final Object[] CREATE_SOME_CLIENTS = new Object[] {
+      CREATE_PROFILE, "Jordan", "21", //
+      CREATE_PROFILE, "Tom", "25", //
+      CREATE_PROFILE, "Jenny", "23",
+  };
 
   private static Object[] unpack(Object[] commands, Object... more) {
     final List<Object> all = new ArrayList<Object>();
