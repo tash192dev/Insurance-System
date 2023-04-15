@@ -1,0 +1,15 @@
+// insurance system> policy_home
+//         Sum to insure: 9999
+//         Property address: 999
+//         Rental? (y/n): 999
+
+// insurance system> policy_car
+//         Sum to insure: 999
+//         Make and model: 999
+//         License plate: 999
+//         Mechanical warranty? (y/n): y
+// CAR
+
+// insurance system> policy_life
+//         Sum to insure: 999
+// LIFE

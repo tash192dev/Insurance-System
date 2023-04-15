@@ -4,7 +4,7 @@ public class HomePolicy extends Policy {
     private boolean isRental;
     private String address;
 
-    private HomePolicy(int sumInsured, boolean isRental, String address) {
+    protected HomePolicy(int sumInsured, String address, Boolean isRental) {
         super(sumInsured);
         this.isRental = isRental;
         this.address = address;

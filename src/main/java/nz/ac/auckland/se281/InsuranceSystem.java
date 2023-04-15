@@ -169,7 +169,57 @@ public class InsuranceSystem {
 
   }
 
+  private boolean trueOrFalse(String input) {
+    char c = input.charAt(0);
+    if (c == 'y') {
+      return true;
+    } else {
+      return false;
+
+    }
+  }
+
   public void createPolicy(PolicyType type, String[] options) {
-    // TODO: Complete this method.
+
+    if (!isLoaded) {
+      MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
+      return;
+    }
+    int sum = Integer.parseInt(options[1]);
+    int age = Integer.parseInt(loadedPerson.getAge());
+
+    switch (type) {
+      case HOME:
+        String address = options[2];
+        Boolean rental = trueOrFalse(options[3]);
+        HomePolicy homePolicy = new HomePolicy(sum, address, rental);
+        loadedPerson.addHomePolicy(homePolicy);
+        System.out.println("HOME");
+        break;
+      case CAR:
+        String makeNModel = options[2];
+        String licensePlate = options[3];
+        Boolean mechanicalWarranty = trueOrFalse(options[4]);
+        CarPolicy carPolicy = new CarPolicy(sum, makeNModel, licensePlate, mechanicalWarranty, age);
+        loadedPerson.addCarPolicy(carPolicy);
+        System.out.println("CAR");
+
+        break;
+      case LIFE:
+        if (loadedPerson.getLifePolicy() != null) {
+          MessageCli.ALREADY_HAS_LIFE_POLICY.printMessage(loadedPerson.getUserName());
+          return;
+        } else if (age > 100) {
+          MessageCli.OVER_AGE_LIMIT_LIFE_POLICY.printMessage(loadedPerson.getUserName());
+          return;
+        }
+        LifePolicy lifePolicy = new LifePolicy(sum, age);
+        loadedPerson.setLifePolicy(lifePolicy);
+        System.out.println("LIFE");
+        break;
+      default:
+        System.out.println("idk whats going on");
+        break;
+    }
   }
 }

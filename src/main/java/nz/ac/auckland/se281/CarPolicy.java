@@ -5,7 +5,7 @@ public class CarPolicy extends Policy {
     private String liscensePlate;
     private boolean breakdownCoverage;
 
-    protected CarPolicy(int sumInsured, String makeNmodelString, String liscensePlate, boolean breakdownCoverage,
+    protected CarPolicy(int sumInsured, String makeNmodelString, String liscensePlate, Boolean breakdownCoverage,
             int age) {
         super(sumInsured);
         this.makeNModel = makeNmodelString;
