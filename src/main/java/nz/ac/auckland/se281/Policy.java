@@ -8,4 +8,5 @@ public abstract class Policy extends Object {
     protected Policy(int sumInsured) {
 
     }
+
 }

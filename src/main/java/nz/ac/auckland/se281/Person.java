@@ -5,15 +5,14 @@ import java.util.ArrayList;
 public class Person {
     private String userName;
     private String age;
-    private int rank;
     private LifePolicy lifePolicy;
     private ArrayList<HomePolicy> homePolicyArraylist;
     private ArrayList<CarPolicy> carPolicyArraylist;
 
-    public Person(String userName, String age, int rank) {
+    public Person(String userName, String age) {
         this.userName = userName;
         this.age = age;
-        this.rank = rank;
+        this.lifePolicy = null;
         homePolicyArraylist = new ArrayList<>();
         carPolicyArraylist = new ArrayList<>();
     }

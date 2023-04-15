@@ -13,3 +13,8 @@
 // insurance system> policy_life
 //         Sum to insure: 999
 // LIFE
+
+
+//Plan 
+
+give person a totalPremium fields

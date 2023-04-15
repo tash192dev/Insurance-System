@@ -11,7 +11,7 @@ public class InsuranceSystem {
   private ArrayList<Person> peopleList = new ArrayList<Person>();
   // this counter will be incremented every time a new Person in instantiated and
   // will be used as their rank attribute
-  private int rankCounter = 0;
+  // private int rankCounter = 0;
   private Person personFound;
   private int personPosition;
 
@@ -110,9 +110,9 @@ public class InsuranceSystem {
       MessageCli.INVALID_AGE.printMessage(age, userName);
 
     } else {
-      Person newPerson = new Person(userName, age, rankCounter);
+      Person newPerson = new Person(userName, age);
       peopleList.add(newPerson);
-      rankCounter++;
+      // rankCounter++;
       MessageCli.PROFILE_CREATED.printMessage(userName, age);
 
     }
@@ -179,6 +179,10 @@ public class InsuranceSystem {
     }
   }
 
+  private void setTotalPremium() {
+
+  }
+
   public void createPolicy(PolicyType type, String[] options) {
 
     if (!isLoaded) {
@@ -221,5 +225,6 @@ public class InsuranceSystem {
         System.out.println("idk whats going on");
         break;
     }
+
   }
 }
