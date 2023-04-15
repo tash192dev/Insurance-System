@@ -176,20 +176,9 @@ public class InsuranceSystem {
     }
   }
 
-  private ArrayList<Policy> concatenatePolicies(Person person) {
-    ArrayList<Policy> policies = new ArrayList<Policy>();
-    policies.addAll(person.getCarPolicyArraylist());
-    policies.addAll(person.getHomePolicyArraylist());
-    if (person.getLifePolicy() != null) {
-      policies.add(person.getLifePolicy());
-    }
-    return policies;
-
-  }
-
   private void setDiscountedPremium(Person person) {
 
-    ArrayList<Policy> policies = concatenatePolicies(person);
+    ArrayList<Policy> policies = loadedPerson.getPolicies();
     int policyCount = person.getPoliciesCount();
     Double multiplier;
     switch (policyCount) {
@@ -203,11 +192,17 @@ public class InsuranceSystem {
         multiplier = 0.8;
         break;
     }
+
+    double totalPremium = 0;
+
     for (Policy policy : policies) {
       double basePremium = policy.getPremium();
       double discountedPremium = basePremium * multiplier;
       policy.setDiscountedPremium(discountedPremium);
+      totalPremium += discountedPremium;
     }
+
+    loadedPerson.setTotalPremium(totalPremium);
   }
 
   public void createPolicy(PolicyType type, String[] options) {
@@ -224,7 +219,7 @@ public class InsuranceSystem {
         String address = options[2];
         Boolean rental = trueOrFalse(options[3]);
         HomePolicy homePolicy = new HomePolicy(sum, address, rental);
-        loadedPerson.addHomePolicy(homePolicy);
+        loadedPerson.addPolicy(homePolicy);
         System.out.println("HOME");
         break;
       case CAR:
@@ -232,12 +227,12 @@ public class InsuranceSystem {
         String licensePlate = options[3];
         Boolean mechanicalWarranty = trueOrFalse(options[4]);
         CarPolicy carPolicy = new CarPolicy(sum, makeNModel, licensePlate, mechanicalWarranty, age);
-        loadedPerson.addCarPolicy(carPolicy);
+        loadedPerson.addPolicy(carPolicy);
         System.out.println("CAR");
 
         break;
       case LIFE:
-        if (loadedPerson.getLifePolicy() != null) {
+        if (loadedPerson.getHasLifePolicy()) {
           MessageCli.ALREADY_HAS_LIFE_POLICY.printMessage(loadedPerson.getUserName());
           return;
         } else if (age > 100) {
@@ -245,14 +240,17 @@ public class InsuranceSystem {
           return;
         }
         LifePolicy lifePolicy = new LifePolicy(sum, age);
-        loadedPerson.setLifePolicy(lifePolicy);
+        loadedPerson.addPolicy(lifePolicy);
+        loadedPerson.setHasLifePolicy();
         System.out.println("LIFE");
         break;
       default:
         System.out.println("idk whats going on");
         break;
     }
+
     loadedPerson.incrementPoliciesCount();
     setDiscountedPremium(loadedPerson);
+
   }
 }
