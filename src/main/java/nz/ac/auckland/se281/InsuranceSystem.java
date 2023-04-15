@@ -1,9 +1,6 @@
 package nz.ac.auckland.se281;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
-
-import org.eclipse.jgit.transport.CredentialItem.Username;
 
 import nz.ac.auckland.se281.Main.PolicyType;
 
@@ -179,8 +176,38 @@ public class InsuranceSystem {
     }
   }
 
-  private void setTotalPremium() {
+  private ArrayList<Policy> concatenatePolicies(Person person) {
+    ArrayList<Policy> policies = new ArrayList<Policy>();
+    policies.addAll(person.getCarPolicyArraylist());
+    policies.addAll(person.getHomePolicyArraylist());
+    if (person.getLifePolicy() != null) {
+      policies.add(person.getLifePolicy());
+    }
+    return policies;
 
+  }
+
+  private void setDiscountedPremium(Person person) {
+
+    ArrayList<Policy> policies = concatenatePolicies(person);
+    int policyCount = person.getPoliciesCount();
+    Double multiplier;
+    switch (policyCount) {
+      case 1:
+        multiplier = 1.0;
+        break;
+      case 2:
+        multiplier = 0.9;
+        break;
+      default:
+        multiplier = 0.8;
+        break;
+    }
+    for (Policy policy : policies) {
+      double basePremium = policy.getPremium();
+      double discountedPremium = basePremium * multiplier;
+      policy.setDiscountedPremium(discountedPremium);
+    }
   }
 
   public void createPolicy(PolicyType type, String[] options) {
@@ -225,6 +252,7 @@ public class InsuranceSystem {
         System.out.println("idk whats going on");
         break;
     }
-
+    loadedPerson.incrementPoliciesCount();
+    setDiscountedPremium(loadedPerson);
   }
 }

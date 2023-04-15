@@ -8,6 +8,7 @@ public class Person {
     private LifePolicy lifePolicy;
     private ArrayList<HomePolicy> homePolicyArraylist;
     private ArrayList<CarPolicy> carPolicyArraylist;
+    private int ammountOfPolicies;
 
     public Person(String userName, String age) {
         this.userName = userName;
@@ -15,26 +16,35 @@ public class Person {
         this.lifePolicy = null;
         homePolicyArraylist = new ArrayList<>();
         carPolicyArraylist = new ArrayList<>();
+        this.ammountOfPolicies = 0;
+    }
+
+    public void incrementPoliciesCount() {
+        this.ammountOfPolicies += 1;
+    }
+
+    public int getPoliciesCount() {
+        return this.ammountOfPolicies;
     }
 
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
 
     public LifePolicy getLifePolicy() {
-        return lifePolicy;
+        return this.lifePolicy;
     }
 
     public ArrayList<HomePolicy> getHomePolicyArraylist() {
-        return homePolicyArraylist;
+        return this.homePolicyArraylist;
     }
 
     public ArrayList<CarPolicy> getCarPolicyArraylist() {
-        return carPolicyArraylist;
+        return this.carPolicyArraylist;
     }
 
     public String getAge() {
-        return age;
+        return this.age;
     }
 
     public void setLifePolicy(LifePolicy lifePolicy) {
@@ -42,10 +52,10 @@ public class Person {
     }
 
     public void addHomePolicy(HomePolicy homePolicy) {
-        homePolicyArraylist.add(homePolicy);
+        this.homePolicyArraylist.add(homePolicy);
     }
 
     public void addCarPolicy(CarPolicy carPolicy) {
-        carPolicyArraylist.add(carPolicy);
+        this.carPolicyArraylist.add(carPolicy);
     }
 }
