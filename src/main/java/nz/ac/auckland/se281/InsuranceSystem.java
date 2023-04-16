@@ -48,10 +48,18 @@ public class InsuranceSystem {
         // 1: Jenny, 25, 0 policies for a total of $0
 
         if (isLoaded) {
-          MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName, age, policiesCount, "ies",
-              totalPremiumString);
+
+          if (peopleList.get(0).getPoliciesCount() != 1) {
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName, age, policiesCount, "ies",
+                totalPremiumString);
+          } else {
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName, age, policiesCount, "y",
+                totalPremiumString);
+
+          }
           policyPrinter(peopleList.get(0));
           return;
+
         }
         MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", "1", userName, age, policiesCount, "ies",
             totalPremiumString);
@@ -75,12 +83,26 @@ public class InsuranceSystem {
           String rank = Integer.toString(i + 1);
 
           if (currentProfile == loadedPerson) {
-            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank, userName, age, policyCount,
-                totalPremium);
+            if (currentProfile.getPoliciesCount() != 1) {
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank, userName, age, policyCount, "ies",
+                  totalPremium);
+            } else {
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank, userName, age, policyCount, "y",
+                  totalPremium);
+
+            }
+            policyPrinter(currentProfile);
           } else {
-            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, totalPremium);
+            if (currentProfile.getPoliciesCount() != 1) {
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, "ies",
+                  totalPremium);
+            } else {
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, "y",
+                  totalPremium);
+              policyPrinter(currentProfile);
+
+            }
           }
-          policyPrinter(currentProfile);
         }
         break;
     }
@@ -248,11 +270,11 @@ public class InsuranceSystem {
         String address = options[1];
         Boolean rental = trueOrFalse(options[2]);
         HomePolicy homePolicy = new HomePolicy(sum, address, rental);
-        System.out.println(Integer.toString(sum));
-        System.out.println(address);
-        System.out.println(rental);
+        // System.out.println(Integer.toString(sum));
+        // System.out.println(address);
+        // System.out.println(rental);
         loadedPerson.addPolicy(homePolicy);
-        System.out.println("HOME");
+        MessageCli.NEW_POLICY_CREATED.printMessage("Home", loadedPerson.getUserName());
         break;
       case CAR:
         String makeNModel = options[1];
@@ -260,8 +282,7 @@ public class InsuranceSystem {
         Boolean mechanicalWarranty = trueOrFalse(options[3]);
         CarPolicy carPolicy = new CarPolicy(sum, makeNModel, licensePlate, mechanicalWarranty, age);
         loadedPerson.addPolicy(carPolicy);
-        System.out.println("CAR");
-
+        MessageCli.NEW_POLICY_CREATED.printMessage("Car", loadedPerson.getUserName());
         break;
       case LIFE:
         if (loadedPerson.getHasLifePolicy()) {
@@ -274,7 +295,7 @@ public class InsuranceSystem {
         LifePolicy lifePolicy = new LifePolicy(sum, age);
         loadedPerson.addPolicy(lifePolicy);
         loadedPerson.setHasLifePolicy();
-        System.out.println("LIFE");
+        MessageCli.NEW_POLICY_CREATED.printMessage("Life", loadedPerson.getUserName());
         break;
       default:
         System.out.println("idk whats going on");
