@@ -9,19 +9,21 @@ public class CarPolicy extends Policy {
 
     protected CarPolicy(int sumInsured, String makeNmodelString, String liscensePlate, Boolean breakdownCoverage,
             int age) {
-        super(sumInsured);
+        // super(sumInsured);
+        this.sumInsured = sumInsured;
+
         this.makeNModel = makeNmodelString;
         this.liscensePlate = liscensePlate;
         this.breakdownCoverage = breakdownCoverage;
 
         if (age < 25) {
-            premium = sumInsured * (15 / 100);
+            premium = (double) sumInsured * (15.0 / 100.0);
         } else {
-            premium = sumInsured * (10 / 100);
+            premium = (double) sumInsured * (10.0 / 100.0);
         }
 
         if (breakdownCoverage) {
-            premium += 80;
+            premium += 80.0;
         }
     }
 

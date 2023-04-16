@@ -5,14 +5,19 @@ public class HomePolicy extends Policy {
     private String address;
 
     public HomePolicy(int sumInsured, String address, Boolean isRental) {
-        super(sumInsured);
+        // super(sumInsured);
+        this.sumInsured = sumInsured;
+        System.out.println(sumInsured);
         this.isRental = isRental;
         this.address = address;
 
         if (isRental) {
-            this.premium = (2 / 100) * (sumInsured);
+            this.premium = (2.0 / 100.0) * ((double) sumInsured);
+            System.out.println(this.premium);
         } else {
-            this.premium = (1 / 100) * (sumInsured);
+            this.premium = (1.0 / 100.0) * ((double) sumInsured);
+            System.out.println(this.premium);
+
         }
 
     }

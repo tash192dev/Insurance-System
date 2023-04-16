@@ -63,7 +63,10 @@ public class InsuranceSystem {
           Person currentProfile = peopleList.get(i);
           userName = currentProfile.getUserName();
           age = currentProfile.getAge();
-          String totalPremium = String.format("%.0f", currentProfile.getTotalPremium());
+          // String totalPremium = String.format("%.0f",
+          // currentProfile.getTotalPremium());
+          String totalPremium = Integer.toString(currentProfile.getTotalPremium());
+
           String policyCount = Integer.toString(currentProfile.getPoliciesCount());
           // rank is being declared for the first time here however userName and age were
           // already declared before which is why this has String infront of it but they
@@ -245,6 +248,9 @@ public class InsuranceSystem {
         String address = options[1];
         Boolean rental = trueOrFalse(options[2]);
         HomePolicy homePolicy = new HomePolicy(sum, address, rental);
+        System.out.println(Integer.toString(sum));
+        System.out.println(address);
+        System.out.println(rental);
         loadedPerson.addPolicy(homePolicy);
         System.out.println("HOME");
         break;

@@ -6,7 +6,7 @@ public abstract class Policy extends Object {
     protected double premium;
     protected double discountedPremium;
 
-    protected Policy(int sumInsured) {
+    protected Policy() {
 
     }
 
