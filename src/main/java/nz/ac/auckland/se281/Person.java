@@ -22,14 +22,16 @@ public class Person {
         this.ammountOfPolicies = 0;
         this.policyArrayList = new ArrayList<Policy>();
         this.hasLifePolicy = false;
+        this.totalPremium = 0.0;
     }
 
     public void setTotalPremium(Double totalPremium) {
         this.totalPremium = totalPremium;
     }
 
-    public Double getTotalPremium() {
-        return this.totalPremium;
+    public Integer getTotalPremium() {
+        int x = this.totalPremium.intValue();
+        return x;
     }
 
     public ArrayList<Policy> getPolicies() {

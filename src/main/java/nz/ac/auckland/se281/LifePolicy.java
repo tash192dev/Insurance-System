@@ -7,5 +7,16 @@ public class LifePolicy extends Policy {
         this.premium = ((1 + age / 100) / 100) * sumInsured;
 
     }
+    // Life Policy (Sum Insured: $<SUM_INSURED>, Premium: $<BASE_PREMIUM> ->
+    // $<DISCOUNTED_PREMIUM>)
 
+    @Override
+    public void printPolicyDetails() {
+        // TODO Auto-generated method stub
+        String sumInsured = Integer.toString(this.getSumInsured());
+        String basePremium = Integer.toString(getPremiumInt());
+        String discountedPremium = Integer.toString(getDiscountedPremium());
+
+        MessageCli.PRINT_DB_LIFE_POLICY.printMessage(sumInsured, basePremium, discountedPremium);
+    }
 }

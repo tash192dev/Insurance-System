@@ -10,12 +10,23 @@ public abstract class Policy extends Object {
 
     }
 
+    public int getSumInsured() {
+        return this.sumInsured;
+    }
+
     public double getPremium() {
         return this.premium;
     }
 
-    public double getDiscountedPremium() {
-        return this.discountedPremium;
+    public int getPremiumInt() {
+        int x = (int) this.premium;
+        return x;
+    }
+
+    public int getDiscountedPremium() {
+        int x = (int) this.discountedPremium;
+        return x;
+        // return this.discountedPremium;
     }
 
     public void setDiscountedPremium(double discountedPremium) {
@@ -23,5 +34,7 @@ public abstract class Policy extends Object {
         this.discountedPremium = discountedPremium;
 
     }
+
+    public abstract void printPolicyDetails();
 
 }

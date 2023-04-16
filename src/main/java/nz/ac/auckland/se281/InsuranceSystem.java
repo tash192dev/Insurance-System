@@ -16,6 +16,17 @@ public class InsuranceSystem {
     // Only this constructor can be used (if you need to initialise fields).
   }
 
+  public void policyPrinter(Person person) {
+    ArrayList<Policy> policies = person.getPolicies();
+    if (person.getPoliciesCount() == 0) {
+      return;
+    } else {
+      for (Policy policy : policies) {
+        policy.printPolicyDetails();
+      }
+    }
+  }
+
   public void printDatabase() {
     int numberOfProfiles = peopleList.size();
 
@@ -29,30 +40,44 @@ public class InsuranceSystem {
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", ":", "");
         String userName = peopleList.get(0).getUserName();
         String age = peopleList.get(0).getAge();
+
+        // String totalPremiumString = String.format("%.0f",
+        // peopleList.get(0).getTotalPremium());
+        String totalPremiumString = Integer.toString(peopleList.get(0).getTotalPremium());
+        String policiesCount = Integer.toString(peopleList.get(0).getPoliciesCount());
+        // 1: Jenny, 25, 0 policies for a total of $0
+
         if (isLoaded) {
-          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ", "1", userName, age);
+          MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName, age, policiesCount, "ies",
+              totalPremiumString);
+          policyPrinter(peopleList.get(0));
           return;
         }
-        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", userName, age);
+        MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", "1", userName, age, policiesCount, "ies",
+            totalPremiumString);
         break;
 
       default:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage((Integer.toString(numberOfProfiles)), "s", ":");
         for (int i = 0; i < numberOfProfiles; i++) {
-          userName = peopleList.get(i).getUserName();
-          age = peopleList.get(i).getAge();
-
+          Person currentProfile = peopleList.get(i);
+          userName = currentProfile.getUserName();
+          age = currentProfile.getAge();
+          String totalPremium = String.format("%.0f", currentProfile.getTotalPremium());
+          String policyCount = Integer.toString(currentProfile.getPoliciesCount());
           // rank is being declared for the first time here however userName and age were
           // already declared before which is why this has String infront of it but they
           // dont
 
           String rank = Integer.toString(i + 1);
 
-          if (peopleList.get(i) == loadedPerson) {
-            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ", rank, userName, age);
+          if (currentProfile == loadedPerson) {
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank, userName, age, policyCount,
+                totalPremium);
           } else {
-            MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(rank, userName, age);
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, totalPremium);
           }
+          policyPrinter(currentProfile);
         }
         break;
     }
@@ -203,6 +228,7 @@ public class InsuranceSystem {
     }
 
     loadedPerson.setTotalPremium(totalPremium);
+
   }
 
   public void createPolicy(PolicyType type, String[] options) {
@@ -211,21 +237,21 @@ public class InsuranceSystem {
       MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
       return;
     }
-    int sum = Integer.parseInt(options[1]);
+    int sum = Integer.parseInt(options[0]);
     int age = Integer.parseInt(loadedPerson.getAge());
 
     switch (type) {
       case HOME:
-        String address = options[2];
-        Boolean rental = trueOrFalse(options[3]);
+        String address = options[1];
+        Boolean rental = trueOrFalse(options[2]);
         HomePolicy homePolicy = new HomePolicy(sum, address, rental);
         loadedPerson.addPolicy(homePolicy);
         System.out.println("HOME");
         break;
       case CAR:
-        String makeNModel = options[2];
-        String licensePlate = options[3];
-        Boolean mechanicalWarranty = trueOrFalse(options[4]);
+        String makeNModel = options[1];
+        String licensePlate = options[2];
+        Boolean mechanicalWarranty = trueOrFalse(options[3]);
         CarPolicy carPolicy = new CarPolicy(sum, makeNModel, licensePlate, mechanicalWarranty, age);
         loadedPerson.addPolicy(carPolicy);
         System.out.println("CAR");
