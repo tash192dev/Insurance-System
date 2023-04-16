@@ -99,9 +99,10 @@ public class InsuranceSystem {
             } else {
               MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, "y",
                   totalPremium);
-              policyPrinter(currentProfile);
 
             }
+            policyPrinter(currentProfile);
+
           }
         }
         break;
@@ -274,7 +275,7 @@ public class InsuranceSystem {
         // System.out.println(address);
         // System.out.println(rental);
         loadedPerson.addPolicy(homePolicy);
-        MessageCli.NEW_POLICY_CREATED.printMessage("Home", loadedPerson.getUserName());
+        MessageCli.NEW_POLICY_CREATED.printMessage("home", loadedPerson.getUserName());
         break;
       case CAR:
         String makeNModel = options[1];
@@ -282,7 +283,7 @@ public class InsuranceSystem {
         Boolean mechanicalWarranty = trueOrFalse(options[3]);
         CarPolicy carPolicy = new CarPolicy(sum, makeNModel, licensePlate, mechanicalWarranty, age);
         loadedPerson.addPolicy(carPolicy);
-        MessageCli.NEW_POLICY_CREATED.printMessage("Car", loadedPerson.getUserName());
+        MessageCli.NEW_POLICY_CREATED.printMessage("car", loadedPerson.getUserName());
         break;
       case LIFE:
         if (loadedPerson.getHasLifePolicy()) {
@@ -295,7 +296,7 @@ public class InsuranceSystem {
         LifePolicy lifePolicy = new LifePolicy(sum, age);
         loadedPerson.addPolicy(lifePolicy);
         loadedPerson.setHasLifePolicy();
-        MessageCli.NEW_POLICY_CREATED.printMessage("Life", loadedPerson.getUserName());
+        MessageCli.NEW_POLICY_CREATED.printMessage("life", loadedPerson.getUserName());
         break;
       default:
         System.out.println("idk whats going on");
