@@ -2,6 +2,8 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 
+import org.eclipse.jgit.api.RemoteSetUrlCommand;
+
 public class Person {
     private String userName;
     private String age;
@@ -12,6 +14,7 @@ public class Person {
     private int ammountOfPolicies;
     private Double totalPremium;
     private Boolean hasLifePolicy;
+    private Boolean isLoaded;
 
     public Person(String userName, String age) {
         this.userName = userName;
@@ -23,6 +26,15 @@ public class Person {
         this.policyArrayList = new ArrayList<Policy>();
         this.hasLifePolicy = false;
         this.totalPremium = 0.0;
+        this.isLoaded = false;
+    }
+
+    public void setIsLoaded(Boolean isLoaded) {
+        this.isLoaded = isLoaded;
+    }
+
+    public Boolean getIsLoaded() {
+        return this.isLoaded;
     }
 
     public void setTotalPremium(Double totalPremium) {

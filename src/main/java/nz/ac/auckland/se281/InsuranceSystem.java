@@ -177,6 +177,7 @@ public class InsuranceSystem {
     if (userNameFound) {
       loadedPerson = personFound;
       isLoaded = true;
+      loadedPerson.setIsLoaded(true);
       MessageCli.PROFILE_LOADED.printMessage(userName);
       return;
     }
@@ -188,8 +189,10 @@ public class InsuranceSystem {
   public void unloadProfile() {
     if (isLoaded) {
       MessageCli.PROFILE_UNLOADED.printMessage(loadedPerson.getUserName());
+      loadedPerson.setIsLoaded(false);
       isLoaded = false;
       loadedPerson = null;
+
       return;
     }
     MessageCli.NO_PROFILE_LOADED.printMessage();
@@ -201,10 +204,11 @@ public class InsuranceSystem {
     userName = userNameFormatter(userName);
 
     boolean userNameFound = !userNameUniqueCheck(userName);
+
     if (!userNameFound) {
       MessageCli.NO_PROFILE_FOUND_TO_DELETE.printMessage(userName);
       return;
-    } else if (isLoaded) {
+    } else if (peopleList.get(personPosition).getIsLoaded()) {
       if (loadedPerson.getUserName().compareTo(userName) == 0) {
         MessageCli.CANNOT_DELETE_PROFILE_WHILE_LOADED.printMessage(userName);
         return;
