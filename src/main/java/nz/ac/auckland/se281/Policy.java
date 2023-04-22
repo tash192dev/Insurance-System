@@ -26,7 +26,6 @@ public abstract class Policy extends Object {
     public int getDiscountedPremium() {
         int x = (int) this.discountedPremium;
         return x;
-        // return this.discountedPremium;
     }
 
     public void setDiscountedPremium(double discountedPremium) {

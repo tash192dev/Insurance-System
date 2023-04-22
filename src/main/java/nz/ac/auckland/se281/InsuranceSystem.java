@@ -50,7 +50,8 @@ public class InsuranceSystem {
         if (isLoaded) {
 
           if (peopleList.get(0).getPoliciesCount() != 1) {
-            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName, age, policiesCount, "ies",
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName,
+                age, policiesCount, "ies",
                 totalPremiumString);
           } else {
             MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", "1", userName, age, policiesCount, "y",
@@ -86,20 +87,24 @@ public class InsuranceSystem {
 
           if (currentProfile == loadedPerson) {
             if (currentProfile.getPoliciesCount() != 1) {
-              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank, userName, age, policyCount, "ies",
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank,
+                  userName, age, policyCount, "ies",
                   totalPremium);
             } else {
-              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank, userName, age, policyCount, "y",
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("*** ", rank,
+                  userName, age, policyCount, "y",
                   totalPremium);
 
             }
             policyPrinter(currentProfile);
           } else {
             if (currentProfile.getPoliciesCount() != 1) {
-              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, "ies",
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank,
+                  userName, age, policyCount, "ies",
                   totalPremium);
             } else {
-              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank, userName, age, policyCount, "y",
+              MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", rank,
+                  userName, age, policyCount, "y",
                   totalPremium);
 
             }
@@ -126,13 +131,10 @@ public class InsuranceSystem {
 
   public String userNameFormatter(String userName) {
 
-    // This method will format the userName to Title case
-    // e.g.
-    // danK -> Dank
-    // daNk -> Dank
-    // dank -> Dank
-    // DaNK -> Dank
-    String newUserName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
+    // This method will format the userName to Title Case
+
+    String newUserName = userName.substring(0, 1).toUpperCase() +
+        userName.substring(1).toLowerCase();
     return newUserName;
   }
 
@@ -172,7 +174,8 @@ public class InsuranceSystem {
   Person loadedPerson;
 
   public void loadProfile(String userName) {
-
+    // this method will load profiles. It checks if something is already loaded and
+    // if it exists
     userName = userNameFormatter(userName);
 
     boolean userNameFound = !userNameUniqueCheck(userName);
@@ -189,6 +192,7 @@ public class InsuranceSystem {
   }
 
   public void unloadProfile() {
+    // this method checks if a profile is already loaded and if so unloads it.
     if (isLoaded) {
       MessageCli.PROFILE_UNLOADED.printMessage(loadedPerson.getUserName());
       loadedPerson.setIsLoaded(false);
@@ -202,7 +206,8 @@ public class InsuranceSystem {
   }
 
   public void deleteProfile(String userName) {
-
+    // this method is used to delete a specific given profile after making sure its
+    // not loaded
     userName = userNameFormatter(userName);
 
     boolean userNameFound = !userNameUniqueCheck(userName);
@@ -224,6 +229,9 @@ public class InsuranceSystem {
   }
 
   private boolean trueOrFalse(String input) {
+    // this method is a helper for a the addPolicy method. It checks if the user
+    // wants to add another policy
+
     char c = Character.toLowerCase(input.charAt(0));
     if (c == 'y') {
       System.out.println("true");
@@ -237,6 +245,8 @@ public class InsuranceSystem {
   }
 
   private void setDiscountedPremium(Person person) {
+    // this function will set the discount of a person. Used everytime a new profile
+    // is created.
 
     ArrayList<Policy> policies = loadedPerson.getPolicies();
     int policyCount = person.getPoliciesCount();
@@ -280,9 +290,7 @@ public class InsuranceSystem {
         String address = options[1];
         Boolean rental = trueOrFalse(options[2]);
         HomePolicy homePolicy = new HomePolicy(sum, address, rental);
-        // System.out.println(Integer.toString(sum));
-        // System.out.println(address);
-        // System.out.println(rental);
+
         loadedPerson.addPolicy(homePolicy);
         MessageCli.NEW_POLICY_CREATED.printMessage("home", loadedPerson.getUserName());
         break;

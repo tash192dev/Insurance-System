@@ -1,18 +1,15 @@
 package nz.ac.auckland.se281;
 
-import java.util.ArrayList;
-
 public class CarPolicy extends Policy {
-    private String makeNModel;
+    private String makeAndModel;
     private String liscensePlate;
     private boolean breakdownCoverage;
 
-    protected CarPolicy(int sumInsured, String makeNmodelString, String liscensePlate, Boolean breakdownCoverage,
+    protected CarPolicy(int sumInsured, String makeAndModelString, String liscensePlate, Boolean breakdownCoverage,
             int age) {
-        // super(sumInsured);
         this.sumInsured = sumInsured;
 
-        this.makeNModel = makeNmodelString;
+        this.makeAndModel = makeAndModelString;
         this.liscensePlate = liscensePlate;
         this.breakdownCoverage = breakdownCoverage;
 
@@ -27,8 +24,8 @@ public class CarPolicy extends Policy {
         }
     }
 
-    public String getMakeNModel() {
-        return makeNModel;
+    public String getmakeAndModel() {
+        return makeAndModel;
     }
 
     public String getLiscensePlate() {
@@ -44,12 +41,11 @@ public class CarPolicy extends Policy {
 
     @Override
     public void printPolicyDetails() {
-        // TODO Auto-generated method stub
-        String makeNModel = this.getMakeNModel();
+        String makeAndModel = this.getmakeAndModel();
         String sumInsured = Integer.toString(this.getSumInsured());
         String basePremium = Integer.toString(getPremiumInt());
         String discountedPremium = Integer.toString(getDiscountedPremium());
-        MessageCli.PRINT_DB_CAR_POLICY.printMessage(makeNModel, sumInsured, basePremium, discountedPremium);
+        MessageCli.PRINT_DB_CAR_POLICY.printMessage(makeAndModel, sumInsured, basePremium, discountedPremium);
     }
 
 }

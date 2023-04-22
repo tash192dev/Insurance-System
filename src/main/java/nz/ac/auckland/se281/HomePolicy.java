@@ -35,14 +35,13 @@ public class HomePolicy extends Policy {
 
     @Override
     public void printPolicyDetails() {
-        // TODO Auto-generated method stub
         String addressString = this.getAddress();
         String sumInsured = Integer.toString(this.getSumInsured());
         String basePremium = Integer.toString(getPremiumInt());
         String discountedPremium = Integer.toString(getDiscountedPremium());
-        MessageCli.PRINT_DB_HOME_POLICY.printMessage(addressString, sumInsured, basePremium, discountedPremium);
-        // String[] returnArray = { addressString, sumInsured, basePremium,
-        // discountedPremium };
+        MessageCli.PRINT_DB_HOME_POLICY.printMessage(addressString,
+                sumInsured, basePremium, discountedPremium);
+
     }
 
 }
