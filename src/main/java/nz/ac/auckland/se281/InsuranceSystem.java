@@ -63,6 +63,8 @@ public class InsuranceSystem {
         }
         MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage("", "1", userName, age, policiesCount, "ies",
             totalPremiumString);
+        policyPrinter(peopleList.get(0));
+
         break;
 
       default:
@@ -138,7 +140,7 @@ public class InsuranceSystem {
     // formatting username to Title case
     userName = userNameFormatter(userName);
     if (isLoaded) {
-      MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(userName);
+      MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(loadedPerson.getUserName());
       return;
     }
     try {
@@ -222,10 +224,13 @@ public class InsuranceSystem {
   }
 
   private boolean trueOrFalse(String input) {
-    char c = input.charAt(0);
+    char c = Character.toLowerCase(input.charAt(0));
     if (c == 'y') {
+      System.out.println("true");
+
       return true;
     } else {
+      System.out.println("false");
       return false;
 
     }
